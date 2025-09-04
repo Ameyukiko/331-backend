@@ -1,0 +1,117 @@
+package se331.lab.rest.controller;
+
+import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import se331.lab.entity.Event;
+
+import jakarta.annotation.PostConstruct;
+import java.util.ArrayList;
+import java.util.List;
+
+@Controller
+public class EventController {
+    List<Event> eventList;
+
+    @PostConstruct
+    public void init() {
+        eventList = new ArrayList<>();
+        eventList.add(Event.builder()
+                .id(123L)
+                .category("animal welfare")
+                .title("Cat Adoption Day")
+                .description("Find your new feline friend at this event.")
+                .location("Meow Town")
+                .date("January 28, 2022")
+                .time("12:00")
+                .petAllowed(true)
+                .organizer("Kat Laydee")
+                .build());
+
+        eventList.add(Event.builder()
+                .id(456L)
+                .category("food")
+                .title("Community Gardening")
+                .description("Join us as we tend to the community edible plants.")
+                .location("Flora City")
+                .date("March 14, 2022")
+                .time("10:00")
+                .petAllowed(true)
+                .organizer("Fern Pollin")
+                .build());
+
+        eventList.add(Event.builder()
+                .id(789L)
+                .category("sustainability")
+                .title("Beach Cleanup")
+                .description("Help pick up trash along the shore.")
+                .location("Playa Del Carmen")
+                .date("July 22, 2022")
+                .time("11:00")
+                .petAllowed(false)
+                .organizer("Carey Wales")
+                .build());
+
+        eventList.add(Event.builder()
+                .id(999L)
+                .category("education")
+                .title("Open AI Workshop")
+                .description("Learn about AI with hands-on examples.")
+                .location("Tech City")
+                .date("August 5, 2025")
+                .time("13:00")
+                .petAllowed(false)
+                .organizer("Fatima Muhammad")
+                .build());
+
+        eventList.add(Event.builder()
+                .id(1000L)
+                .category("health")
+                .title("Yoga in the Park")
+                .description("Join us for a morning yoga session to refresh your body and mind.")
+                .location("Greenwood Park")
+                .date("September 10, 2023")
+                .time("07:30")
+                .petAllowed(false)
+                .organizer("Liam Chen")
+                .build());
+
+        eventList.add(Event.builder()
+                .id(1011L)
+                .category("music")
+                .title("Jazz Night Festival")
+                .description("Enjoy an evening of live jazz performances.")
+                .location("Riverfront Stage")
+                .date("November 20, 2024")
+                .time("19:00")
+                .petAllowed(true)
+                .organizer("Sofia Martinez")
+                .build());
+    }
+
+    @GetMapping("events")
+    public ResponseEntity<?> getEventLists(
+            @RequestParam(value = "_limit", required = false) Integer perPage,
+            @RequestParam(value = "_page", required = false) Integer page) {
+
+        perPage = (perPage == null) ? eventList.size() : perPage;
+        page = page == null ? 1 : page;
+
+        Integer firstIndex = (page - 1) * perPage;
+        List<Event> output = new ArrayList<>();
+
+        for (int i = firstIndex; i < firstIndex + perPage && i < eventList.size(); i++) {
+            output.add(eventList.get(i));
+        }
+        try {
+            for (int i = firstIndex; i < firstIndex + perPage; i++) {
+                output.add(eventList.get(i));
+            }
+            return ResponseEntity.ok(output);
+        } catch (IndexOutOfBoundsException ex) {
+            return ResponseEntity.ok(output);
+        }
+    }
+}
+
