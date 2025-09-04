@@ -1,21 +1,15 @@
-package se331.lab.rest.controller;
+package se331.lab.dao;
 
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.server.ResponseStatusException;
-import se331.lab.entity.Event;
-
-import jakarta.annotation.PostConstruct;
 import java.util.ArrayList;
 import java.util.List;
 
-@Controller
-public class EventController {
+import org.springframework.stereotype.Repository;
+
+import jakarta.annotation.PostConstruct;
+import se331.lab.entity.Event;
+
+@Repository
+public class EventDaoImpl implements EventDao {
     List<Event> eventList;
 
     @PostConstruct
@@ -94,43 +88,22 @@ public class EventController {
                 .build());
     }
 
-    @GetMapping("events")
-    public ResponseEntity<?> getEventList(
-            @RequestParam(value = "_limit", required = false) Integer perPage,
-            @RequestParam(value = "_page", required = false) Integer page) {
-        perPage = perPage == null ? eventList.size() : perPage;
+    @Override
+    public Integer getEventSize() {
+        return eventList.size();
+    }
+
+    @Override
+    public List<Event> getEvents(Integer pageSize, Integer page) {
+        pageSize = pageSize == null ? eventList.size() : pageSize;
         page = page == null ? 1 : page;
-        Integer firstIndex = (page - 1) * perPage;
-        List<Event> output = new ArrayList<>();
-        HttpHeaders responseHeaders = new HttpHeaders();
-        responseHeaders.set("x-total-count", String.valueOf(eventList.size()));
+        int firstIndex = (page - 1) * pageSize;
 
-        try {
-            for (int i = firstIndex; i < firstIndex + perPage; i++) {
-                output.add(eventList.get(i));
-            }
-
-            return new ResponseEntity<>(output, responseHeaders, HttpStatus.OK);
-        } catch (IndexOutOfBoundsException ex) {
-            return new ResponseEntity<>(output, responseHeaders, HttpStatus.OK);
-        }
+        return eventList.subList(firstIndex, firstIndex + pageSize);
     }
 
-    @GetMapping("events/{id}")
-    public ResponseEntity<?> getEvent(@PathVariable("id") Long id) {
-        Event output = null;
-
-        for (Event event : eventList) {
-            if (event.getId() == id) {
-                output = event;
-                break;
-            }
-        }
-        if (output != null) {
-            return ResponseEntity.ok(output);
-        } else {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "The given id is not found");
-        }
+    @Override
+    public Event getEvent(Long id) {
+        return eventList.stream().filter(event -> event.getId().equals(id)).findFirst().orElse(null);
     }
-
 }
