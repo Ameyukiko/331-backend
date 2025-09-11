@@ -6,13 +6,16 @@ import org.springframework.stereotype.Component;
 
 import lombok.RequiredArgsConstructor;
 import se331.lab.entity.Event;
+import se331.lab.entity.Organizer;
 import se331.lab.repository.EventRepository;
+import se331.lab.repository.OrganizerRepository;
 
 @Component
 @RequiredArgsConstructor
 public class InitApp implements ApplicationListener<ApplicationReadyEvent> {
 
     final EventRepository eventRepository;
+    final OrganizerRepository organizerRepository;
 
     @Override
     public void onApplicationEvent(ApplicationReadyEvent applicationReadyEvent) {
@@ -55,5 +58,35 @@ public class InitApp implements ApplicationListener<ApplicationReadyEvent> {
                 .time("10.00am - 6.00 pm.")
                 .petAllowed(true)
                 .organizer("Chiang Mai Municipality").build());
+
+        organizerRepository.save(Organizer.builder()
+                .name("OpenAI Research")
+                .address("San Francisco, CA 94110")
+                .build());
+
+        organizerRepository.save(Organizer.builder()
+                .name("Tech Valley Solutions")
+                .address("123 Innovation Drive, Austin, TX 73301")
+                .build());
+
+        organizerRepository.save(Organizer.builder()
+                .name("MicroApple Inc.")
+                .address("Redwood Forest, Cupertino North, CN 95014")
+                .build());
+
+        organizerRepository.save(Organizer.builder()
+                .name("Green Earth Foundation")
+                .address("45 Sustainability St., Portland, OR 97035")
+                .build());
+
+        organizerRepository.save(Organizer.builder()
+                .name("Future Vision Labs")
+                .address("88 Quantum Road, Boston, MA 02115")
+                .build());
+
+        organizerRepository.save(Organizer.builder()
+                .name("Harmony Music Org.")
+                .address("77 Jazz Avenue, New Orleans, LA 70130")
+                .build());
     }
 }
