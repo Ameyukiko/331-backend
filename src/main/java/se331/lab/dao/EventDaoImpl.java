@@ -4,6 +4,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.context.annotation.Profile;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Repository;
 
 import jakarta.annotation.PostConstruct;
@@ -96,12 +99,14 @@ public class EventDaoImpl implements EventDao {
     }
 
     @Override
-    public List<Event> getEvents(Integer pageSize, Integer page) {
+    public Page<Event> getEvents(Integer pageSize, Integer page) {
         pageSize = pageSize == null ? eventList.size() : pageSize;
         page = page == null ? 1 : page;
         int firstIndex = (page - 1) * pageSize;
 
-        return eventList.subList(firstIndex, firstIndex + pageSize);
+        return new PageImpl<Event>(eventList.subList(firstIndex, firstIndex + pageSize),
+                PageRequest.of(page, pageSize), eventList.size());
+
     }
 
     @Override
