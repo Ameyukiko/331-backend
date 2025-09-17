@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.context.annotation.Profile;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Repository;
 
 import lombok.RequiredArgsConstructor;
@@ -42,4 +43,8 @@ public class EventDaoDbImpl implements EventDao {
         return eventRepository.save(event);
     }
 
+    @Override
+    public Page<Event> getEvents(String title, Pageable page){
+        return eventRepository.findByTitleContainingOrDescriptionContaining(title, title,page);
+    }
 }

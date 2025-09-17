@@ -1,6 +1,7 @@
 package se331.lab.service;
 
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import lombok.RequiredArgsConstructor;
@@ -30,6 +31,11 @@ public class EventServiceImpl implements EventService {
     @Override
     public Event save(Event event) {
         return eventDao.save(event);
+    }
+
+    @Override
+    public Page<Event> getEvents(String title, Pageable pageable) {
+        return eventDao.getEvents(title,pageable);
     }
 
 }
