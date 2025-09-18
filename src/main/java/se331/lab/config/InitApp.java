@@ -50,14 +50,15 @@ public class InitApp implements ApplicationListener<ApplicationReadyEvent> {
                 .organizer("Chiang Mai").build());
 
         eventRepository.save(Event.builder()
-                .category("Cultural")
-                .title("Songkran")
-                .description("Let's Play Water")
-                .location("Chiang Mai Moat")
-                .date("13th April")
-                .time("10.00am - 6.00 pm.")
-                .petAllowed(true)
-                .organizer("Chiang Mai Municipality").build());
+                .category("Academic")
+                .title("CAMT Open House 2025")
+                .description("Explore Software Engineering, UX, AI, and more at CAMT CMU")
+                .location("Chiang Mai University - CAMT Building")
+                .date("20th November")
+                .time("9.00 am - 4.00 pm")
+                .petAllowed(false)
+                .organizer("College of Arts, Media and Technology (CAMT)")
+                .build());
 
         organizerRepository.save(Organizer.builder()
                 .name("OpenAI Research")
