@@ -25,5 +25,15 @@ public class SupabaseController {
             return ResponseEntity.status(500).body("Error uploading file: " + e.getMessage());
         }
     }
+    @PostMapping("/uploadImage")
+    public ResponseEntity<?> uploadImage(@RequestParam("image") MultipartFile file) {
+        try {
+            StorageFileDto fileUrl = supabaseStorageService.uploadImage(file);
+            return ResponseEntity.ok(fileUrl);
+        } catch (Exception e) {
+            return ResponseEntity.status(500).body("Error uploading file: " + e.getMessage());
+        }
+    }
+
 }
 
