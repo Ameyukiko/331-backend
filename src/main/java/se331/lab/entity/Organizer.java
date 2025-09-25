@@ -22,4 +22,5 @@ public class Organizer {
     Long id;
     String name;
     String address;
+    String image;
 }
