@@ -5,6 +5,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+import se331.lab.util.StorageFileDto;
 import se331.lab.util.SupabaseStorageService;
 
 import org.springframework.web.bind.annotation.CrossOrigin;
