@@ -27,7 +27,7 @@ public class InitApp implements ApplicationListener<ApplicationReadyEvent> {
                 .date("3rd Sept")
                 .time("3.00-4.00 pm.")
                 .petAllowed(false)
-                .organizer("CMU").build());
+                .build());
 
         eventRepository.save(Event.builder()
                 .category("Academic")
@@ -37,7 +37,7 @@ public class InitApp implements ApplicationListener<ApplicationReadyEvent> {
                 .date("21th Jan")
                 .time("8.00am-4.00 pm.")
                 .petAllowed(false)
-                .organizer("CMU").build());
+                .build());
 
         eventRepository.save(Event.builder()
                 .category("Cultural")
@@ -47,7 +47,7 @@ public class InitApp implements ApplicationListener<ApplicationReadyEvent> {
                 .date("21th Nov")
                 .time("8.00-10.00 pm.")
                 .petAllowed(false)
-                .organizer("Chiang Mai").build());
+                .build());
 
         eventRepository.save(Event.builder()
                 .category("Academic")
@@ -57,7 +57,6 @@ public class InitApp implements ApplicationListener<ApplicationReadyEvent> {
                 .date("20th November")
                 .time("9.00 am - 4.00 pm")
                 .petAllowed(false)
-                .organizer("College of Arts, Media and Technology (CAMT)")
                 .build());
 
         organizerRepository.save(Organizer.builder()
