@@ -22,7 +22,7 @@ spring:
 supabase:
   storage:
     endpoint: https://unawwgkrujloenbnnmgn.storage.supabase.co/storage/v1/s3
-    endpoint_output: https://unawwgkrujloenbnnmgn.storage.supabase.co/storage/v1/public
+    endpoint_output: https://unawwgkrujloenbnnmgn.storage.supabase.co/storage/v1/object/public
     bucket: imageupload
     region: ap-southeast-1
     accessKey: 80f14fbefd2b73886dbed33e9568d07b
