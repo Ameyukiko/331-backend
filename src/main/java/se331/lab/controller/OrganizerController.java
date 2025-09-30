@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.server.ResponseStatusException;
+import se331.lab.util.LabMapper;
 
 @Controller
 @RequiredArgsConstructor
@@ -28,7 +29,12 @@ public class OrganizerController {
 
         HttpHeaders responseHeaders = new HttpHeaders();
         responseHeaders.set("x-total-count", String.valueOf(pageOutput.getTotalElements()));
-        return new ResponseEntity<>(pageOutput.getContent(), responseHeaders, HttpStatus.OK);
+        return new ResponseEntity<>(
+                LabMapper.INSTANCE.getOrganizerDto(pageOutput.getContent()),
+                responseHeaders,
+                HttpStatus.OK
+        );
+
     }
 
     @GetMapping("organizers/{id}")

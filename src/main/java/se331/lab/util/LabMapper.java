@@ -4,6 +4,7 @@ import org.mapstruct.Mapper;
 import org.mapstruct.factory.Mappers;
 import se331.lab.DTO.EventDTO;
 import se331.lab.DTO.EventOrgainzerDTO;
+import se331.lab.DTO.OrganizerDTO;
 import se331.lab.entity.Event;
 import se331.lab.entity.Organizer;
 
@@ -14,6 +15,8 @@ public interface LabMapper {
     LabMapper INSTANCE = Mappers.getMapper(LabMapper.class);
     EventDTO getEventDto(Event event);
     List<EventDTO> getEventDto(List<Event> events);
+    OrganizerDTO getOrganizerDto(Organizer organizer);
+    List<OrganizerDTO> getOrganizerDto(List<Organizer> organizers);
 
     // เพิ่ม mapping สำหรับ organizer
     EventOrgainzerDTO getEventOrgainzerDto(Organizer organizer);
