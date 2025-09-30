@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.context.annotation.Profile;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Repository;
 
 import lombok.RequiredArgsConstructor;
@@ -30,6 +31,11 @@ public class OrganizerDaoDbImpl implements OrganizerDao {
         pageSize = pageSize == null ? organizers.size() : pageSize;
 
         return organizerRepository.findAll(PageRequest.of(page - 1, pageSize));
+    }
+
+    @Override
+    public Page<Organizer> getOrganizers(Pageable PageRequest) {
+        return organizerRepository.findAll(PageRequest);
     }
 
     @Override

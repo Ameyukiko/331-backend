@@ -7,15 +7,22 @@ import org.springframework.context.annotation.Profile;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Repository;
 
 import jakarta.annotation.PostConstruct;
 import se331.lab.entity.Organizer;
+import se331.lab.repository.OrganizerRepository;
 
 @Repository
 @Profile("manual")
 public class OrganizerDaoImpl implements OrganizerDao {
+    private final OrganizerRepository organizerRepository;
     List<Organizer> organizerList;
+
+    public OrganizerDaoImpl(OrganizerRepository organizerRepository) {
+        this.organizerRepository = organizerRepository;
+    }
 
     @PostConstruct
     public void init() {
@@ -70,6 +77,11 @@ public class OrganizerDaoImpl implements OrganizerDao {
 
         return new PageImpl<Organizer>(organizerList.subList(firstIndex, firstIndex + pageSize),
                 PageRequest.of(page, pageSize), organizerList.size());
+    }
+
+    @Override
+    public Page<Organizer> getOrganizers(Pageable PageRequest) {
+        return organizerRepository.findAll(PageRequest);
     }
 
     @Override

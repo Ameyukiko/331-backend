@@ -1,11 +1,14 @@
 package se331.lab.service;
 
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import lombok.RequiredArgsConstructor;
 import se331.lab.dao.OrganizerDao;
 import se331.lab.entity.Organizer;
+
+import java.util.List;
 
 @Service
 @RequiredArgsConstructor
@@ -15,6 +18,11 @@ public class OrganizerServiceImpl implements OrganizerService {
     @Override
     public Integer getOrganizerSize() {
         return organizerDao.getOrganizerSize();
+    }
+
+    @Override
+    public List<Organizer> getAllOrganizers() {
+        return organizerDao.getOrganizers(Pageable.unpaged()).getContent();
     }
 
     @Override
