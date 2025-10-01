@@ -1,18 +1,18 @@
-package se331.lab.entity;
 
+package se331.lab.entity;
+import java.util.List;
+import jakarta.persistence.ElementCollection;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.*;
+import jakarta.persistence.ManyToMany;
+import jakarta.persistence.ManyToOne;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
-
-import java.util.List;
-
 @Data
 @Builder
 @Entity
@@ -30,12 +30,10 @@ public class Event {
     String date;
     String time;
     Boolean petAllowed;
-//    String organizer;
     @ManyToOne
     Organizer organizer;
-    @ManyToMany(mappedBy = "eventsHistory")
-    List<Participant>  participants;
-
+    @ManyToMany(mappedBy = "eventHistory")
+    List<Participant> participants;
     @ElementCollection
     List<String> images;
 }
