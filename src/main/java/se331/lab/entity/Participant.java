@@ -1,9 +1,19 @@
 package se331.lab.entity;
 
-import jakarta.persistence.*;
-import lombok.*;
-
 import java.util.List;
+
+import org.hibernate.annotations.ManyToAny;
+
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.ManyToMany;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.NoArgsConstructor;
 
 @Data
 @Builder
@@ -18,5 +28,5 @@ public class Participant {
     String name;
     String telNo;
     @ManyToMany
-    List<Event> eventsHistory;
+    List<Event> eventHistory;
 }

@@ -2,6 +2,7 @@ package se331.lab.dao;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.context.annotation.Profile;
 import org.springframework.data.domain.Page;
@@ -17,50 +18,45 @@ import se331.lab.repository.OrganizerRepository;
 @Repository
 @Profile("manual")
 public class OrganizerDaoImpl implements OrganizerDao {
-    private final OrganizerRepository organizerRepository;
     List<Organizer> organizerList;
-
-    public OrganizerDaoImpl(OrganizerRepository organizerRepository) {
-        this.organizerRepository = organizerRepository;
-    }
 
     @PostConstruct
     public void init() {
         organizerList = new ArrayList<>();
         organizerList.add(Organizer.builder()
                 .id(1L)
-                .name("OpenAI Research")
-                .address("San Francisco, CA 94110")
+                .name("CodeMonkeys United")
+                .image("https://example.com/images/codemonkeys.jpg")
                 .build());
 
         organizerList.add(Organizer.builder()
                 .id(2L)
-                .name("Tech Valley Solutions")
-                .address("123 Innovation Drive, Austin, TX 73301")
+                .name("StackOverflow.ai")
+                .image("https://example.com/images/stackoverflow.jpg")
                 .build());
 
         organizerList.add(Organizer.builder()
                 .id(3L)
                 .name("MicroApple Inc.")
-                .address("Redwood Forest, Cupertino North, CN 95014")
+                .image("https://example.com/images/microapple.jpg")
                 .build());
 
         organizerList.add(Organizer.builder()
                 .id(4L)
-                .name("Green Earth Foundation")
-                .address("45 Sustainability St., Portland, OR 97035")
+                .name("Googlebooksoft")
+                .image("https://example.com/images/googlebooksoft.jpg")
                 .build());
 
         organizerList.add(Organizer.builder()
                 .id(5L)
-                .name("Future Vision Labs")
-                .address("88 Quantum Road, Boston, MA 02115")
+                .name("Amazon Cloud99")
+                .image("https://example.com/images/amazoncloud.jpg")
                 .build());
 
         organizerList.add(Organizer.builder()
                 .id(6L)
-                .name("Harmony Music Org.")
-                .address("77 Jazz Avenue, New Orleans, LA 70130")
+                .name("The MetaVerse Café")
+                .image("https://example.com/images/metaverse.jpg")
                 .build());
     }
 
@@ -80,8 +76,14 @@ public class OrganizerDaoImpl implements OrganizerDao {
     }
 
     @Override
-    public Page<Organizer> getOrganizers(Pageable PageRequest) {
-        return organizerRepository.findAll(PageRequest);
+    public Page<Organizer> getOrganizers(Pageable pageRequest) {
+        return new PageImpl<Organizer>(organizerList,
+                PageRequest.of(1, organizerList.size()), organizerList.size());
+    }
+
+    @Override
+    public Optional<Organizer> findById(Long id) {
+        return Optional.ofNullable(organizerList.get(id.intValue()));
     }
 
     @Override

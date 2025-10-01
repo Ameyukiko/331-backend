@@ -1,6 +1,7 @@
 package se331.lab.dao;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.context.annotation.Profile;
 import org.springframework.data.domain.Page;
@@ -34,8 +35,13 @@ public class OrganizerDaoDbImpl implements OrganizerDao {
     }
 
     @Override
-    public Page<Organizer> getOrganizers(Pageable PageRequest) {
-        return organizerRepository.findAll(PageRequest);
+    public Page<Organizer> getOrganizers(Pageable pageRequest) {
+        return organizerRepository.findAll(pageRequest);
+    }
+
+    @Override
+    public Optional<Organizer> findById(Long id) {
+        return organizerRepository.findById(id);
     }
 
     @Override

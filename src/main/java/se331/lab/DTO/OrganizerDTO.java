@@ -8,6 +8,7 @@ import se331.lab.entity.Organizer;
 
 import java.util.ArrayList;
 import java.util.List;
+import se331.lab.DTO.OrganizerOwnEventDTO;
 
 @Data
 @Builder

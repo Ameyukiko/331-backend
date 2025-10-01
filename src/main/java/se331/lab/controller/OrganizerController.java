@@ -22,19 +22,22 @@ import se331.lab.util.LabMapper;
 public class OrganizerController {
     final OrganizerService organizerService;
 
+    // @GetMapping("organizers")
+    // public ResponseEntity<?> getOrganizerList(@RequestParam(value = "_limit",
+    // required = false) Integer perPage,
+    // @RequestParam(value = "_page", required = false) Integer page) {
+    // Page<Organizer> pageOutput = organizerService.getOrganizers(perPage, page);
+
+    // HttpHeaders responseHeaders = new HttpHeaders();
+    // responseHeaders.set("x-total-count",
+    // String.valueOf(pageOutput.getTotalElements()));
+    // return new ResponseEntity<>(pageOutput.getContent(), responseHeaders,
+    // HttpStatus.OK);
+    // }
+
     @GetMapping("organizers")
-    public ResponseEntity<?> getOrganizerList(@RequestParam(value = "_limit", required = false) Integer perPage,
-                                              @RequestParam(value = "_page", required = false) Integer page) {
-        Page<Organizer> pageOutput = organizerService.getOrganizers(perPage, page);
-
-        HttpHeaders responseHeaders = new HttpHeaders();
-        responseHeaders.set("x-total-count", String.valueOf(pageOutput.getTotalElements()));
-        return new ResponseEntity<>(
-                LabMapper.INSTANCE.getOrganizerDto(pageOutput.getContent()),
-                responseHeaders,
-                HttpStatus.OK
-        );
-
+    public ResponseEntity<?> getOrganizers() {
+        return ResponseEntity.ok(LabMapper.INSTANCE.getOrganizerDto(organizerService.getAllOrganizers()));
     }
 
     @GetMapping("organizers/{id}")
