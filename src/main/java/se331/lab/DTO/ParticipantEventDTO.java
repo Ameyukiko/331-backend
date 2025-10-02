@@ -16,5 +16,5 @@ public class ParticipantEventDTO {
     Long id;
     String name;
     String telNo;
-    List<EventNoParticipantDTO> attendedEvents;
+    List<EventNoParticipantDTO> eventHistory;
 }

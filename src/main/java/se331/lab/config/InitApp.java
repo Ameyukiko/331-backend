@@ -1,10 +1,10 @@
 package se331.lab.config;
 
-import jakarta.transaction.Transactional;
 import org.springframework.boot.context.event.ApplicationReadyEvent;
 import org.springframework.context.ApplicationListener;
 import org.springframework.stereotype.Component;
 
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import se331.lab.entity.Event;
 import se331.lab.entity.Organizer;
@@ -25,14 +25,11 @@ public class InitApp implements ApplicationListener<ApplicationReadyEvent> {
     @Transactional
     public void onApplicationEvent(ApplicationReadyEvent applicationReadyEvent) {
         Organizer org1, org2, org3;
-        org1 = organizerRepository.save(Organizer.builder()
-                .name("CAMT").build());
-        org2 = organizerRepository.save(Organizer.builder()
-                .name("CMU").build());
-        org3 = organizerRepository.save(Organizer.builder()
-                .name("ChiangMai").build());
-
+        org1 = organizerRepository.save(Organizer.builder().name("CAMT").build());
+        org2 = organizerRepository.save(Organizer.builder().name("CMU").build());
+        org3 = organizerRepository.save(Organizer.builder().name("ChiangMai").build());
         Event tempEvent;
+
         tempEvent = eventRepository.save(Event.builder()
                 .category("Academic")
                 .title("Midterm Exam")
@@ -69,17 +66,14 @@ public class InitApp implements ApplicationListener<ApplicationReadyEvent> {
         tempEvent.setOrganizer(org2);
         org2.getOwnEvents().add(tempEvent);
 
-        tempEvent.setOrganizer(org3);
-        org3.getOwnEvents().add(tempEvent);
         tempEvent = eventRepository.save(Event.builder()
-                .category("Academic")
-                .title("CAMT Open House 2025")
-                .description("Explore Software Engineering, UX, AI, and more at CAMT CMU")
-                .location("Chiang Mai University - CAMT Building")
-                .date("20th November")
-                .time("9.00 am - 4.00 pm")
-                .petAllowed(false)
-                .organizer(org1)
+                .category("Cultural")
+                .title("Songkran")
+                .description("Let's Play Water")
+                .location("Chiang Mai Moat")
+                .date("13th April")
+                .time("10.00am - 6.00 pm.")
+                .petAllowed(true)
                 .build());
         tempEvent.setOrganizer(org3);
         org3.getOwnEvents().add(tempEvent);
