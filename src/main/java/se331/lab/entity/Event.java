@@ -1,5 +1,6 @@
 
 package se331.lab.entity;
+import java.util.ArrayList;
 import java.util.List;
 import jakarta.persistence.ElementCollection;
 import jakarta.persistence.Entity;
@@ -33,7 +34,8 @@ public class Event {
     @ManyToOne
     Organizer organizer;
     @ManyToMany(mappedBy = "eventHistory")
-    List<Participant> participants;
+    @Builder.Default
+    List<Participant> participants = new ArrayList<>();
     @ElementCollection
     List<String> images;
 }

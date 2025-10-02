@@ -1,5 +1,6 @@
 package se331.lab.entity;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.hibernate.annotations.ManyToAny;
@@ -28,5 +29,7 @@ public class Participant {
     String name;
     String telNo;
     @ManyToMany
-    List<Event> eventHistory;
+    @Builder.Default
+    List<Event> eventHistory = new ArrayList<>();
+
 }
