@@ -14,7 +14,7 @@ import se331.lab.service.EventService;
 import lombok.RequiredArgsConstructor;
 import se331.lab.util.LabMapper;
 
-@Controller
+@RestController
 @RequiredArgsConstructor
 public class EventController {
     final EventService eventService;
