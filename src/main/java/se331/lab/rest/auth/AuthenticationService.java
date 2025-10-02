@@ -1,7 +1,5 @@
 package se331.lab.rest.auth;
 
-
-
 import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -18,6 +16,7 @@ import se331.lab.rest.token.TokenType;
 import se331.lab.rest.user.Role;
 import se331.lab.rest.user.User;
 import se331.lab.rest.user.UserRepository;
+import se331.lab.util.LabMapper;
 
 import java.io.IOException;
 import java.util.List;
@@ -33,50 +32,50 @@ public class AuthenticationService {
 
   public AuthenticationResponse register(RegisterRequest request) {
     User user = User.builder()
-            .firstname(request.getFirstname())
-            .lastname(request.getLastname())
-            .email(request.getEmail())
-            .password(passwordEncoder.encode(request.getPassword()))
-            .roles(List.of(Role.ROLE_USER))
-            .build();
+        .firstname(request.getFirstname())
+        .lastname(request.getLastname())
+        .email(request.getEmail())
+        .password(passwordEncoder.encode(request.getPassword()))
+        .roles(List.of(Role.ROLE_USER))
+        .build();
     var savedUser = repository.save(user);
     var jwtToken = jwtService.generateToken(user);
     var refreshToken = jwtService.generateRefreshToken(user);
     saveUserToken(savedUser, jwtToken);
     return AuthenticationResponse.builder()
         .accessToken(jwtToken)
-            .refreshToken(refreshToken)
+        .refreshToken(refreshToken)
+        .user(LabMapper.INSTANCE.getOrganizerDTO(user.getOrganizer()))
         .build();
   }
 
   public AuthenticationResponse authenticate(AuthenticationRequest request) {
     authenticationManager.authenticate(
-            new UsernamePasswordAuthenticationToken(
-                    request.getUsername(),
-                    request.getPassword()
-            )
-    );
+        new UsernamePasswordAuthenticationToken(
+            request.getUsername(),
+            request.getPassword()));
     User user = repository.findByUsername(request.getUsername())
-            .orElseThrow();
+        .orElseThrow();
 
     String jwtToken = jwtService.generateToken(user);
     String refreshToken = jwtService.generateRefreshToken(user);
-//    revokeAllUserTokens(user);
+    // revokeAllUserTokens(user);
     saveUserToken(user, jwtToken);
     return AuthenticationResponse.builder()
-            .accessToken(jwtToken)
-            .refreshToken(refreshToken)
-            .build();
+        .accessToken(jwtToken)
+        .refreshToken(refreshToken)
+        .user(LabMapper.INSTANCE.getOrganizerDTO(user.getOrganizer()))
+        .build();
   }
 
   private void saveUserToken(User user, String jwtToken) {
     Token token = Token.builder()
-            .user(user)
-            .token(jwtToken)
-            .tokenType(TokenType.BEARER)
-            .expired(false)
-            .revoked(false)
-            .build();
+        .user(user)
+        .token(jwtToken)
+        .tokenType(TokenType.BEARER)
+        .expired(false)
+        .revoked(false)
+        .build();
     tokenRepository.save(token);
   }
 
@@ -92,28 +91,27 @@ public class AuthenticationService {
   }
 
   public void refreshToken(
-          HttpServletRequest request,
-          HttpServletResponse response
-  ) throws IOException {
+      HttpServletRequest request,
+      HttpServletResponse response) throws IOException {
     final String authHeader = request.getHeader(HttpHeaders.AUTHORIZATION);
     final String refreshToken;
     final String userEmail;
-    if (authHeader == null ||!authHeader.startsWith("Bearer ")) {
+    if (authHeader == null || !authHeader.startsWith("Bearer ")) {
       return;
     }
     refreshToken = authHeader.substring(7);
     userEmail = jwtService.extractUsername(refreshToken);
     if (userEmail != null) {
       User user = this.repository.findByUsername(userEmail)
-              .orElseThrow();
+          .orElseThrow();
       if (jwtService.isTokenValid(refreshToken, user)) {
         String accessToken = jwtService.generateToken(user);
         revokeAllUserTokens(user);
         saveUserToken(user, accessToken);
         AuthenticationResponse authResponse = AuthenticationResponse.builder()
-                .accessToken(accessToken)
-                .refreshToken(refreshToken)
-                .build();
+            .accessToken(accessToken)
+            .refreshToken(refreshToken)
+            .build();
         new ObjectMapper().writeValue(response.getOutputStream(), authResponse);
       }
     }

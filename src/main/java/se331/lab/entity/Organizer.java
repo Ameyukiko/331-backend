@@ -1,11 +1,20 @@
 package se331.lab.entity;
 
-import jakarta.persistence.*;
-import lombok.*;
-
 import java.util.ArrayList;
 import java.util.List;
 
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
+import jakarta.persistence.OneToOne;
+import lombok.Builder;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.NoArgsConstructor;
+import se331.lab.rest.user.User;
+import lombok.AllArgsConstructor;
 
 @Data
 @Builder
@@ -18,9 +27,10 @@ public class Organizer {
     @EqualsAndHashCode.Exclude
     Long id;
     String name;
-    String address;
-    String image;
     @OneToMany(mappedBy = "organizer")
     @Builder.Default
     List<Event> ownEvents = new ArrayList<>();
+    String image;
+    @OneToOne
+    User user;
 }
