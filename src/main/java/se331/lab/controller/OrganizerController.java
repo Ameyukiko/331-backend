@@ -9,13 +9,14 @@ import org.springframework.stereotype.Controller;
 import lombok.RequiredArgsConstructor;
 import se331.lab.entity.Organizer;
 import se331.lab.service.OrganizerService;
+import se331.lab.util.LabMapper;
+
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.server.ResponseStatusException;
-import se331.lab.util.LabMapper;
 
 @Controller
 @RequiredArgsConstructor
@@ -37,7 +38,7 @@ public class OrganizerController {
 
     @GetMapping("organizers")
     public ResponseEntity<?> getOrganizers() {
-        return ResponseEntity.ok(LabMapper.INSTANCE.getOrganizerDto(organizerService.getAllOrganizers()));
+        return ResponseEntity.ok(LabMapper.INSTANCE.getOrganizerDTO(organizerService.getAllOrganizers()));
     }
 
     @GetMapping("organizers/{id}")
