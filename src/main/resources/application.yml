@@ -27,3 +27,11 @@ supabase:
     region: ap-southeast-1
     accessKey: 80f14fbefd2b73886dbed33e9568d07b
     secretKey: 9e6d554f2cf9e84c7b65d1f0352cce6f9c40f042041c4d522200049f3ca98d72
+
+application:
+  security:
+    jwt:
+      secret-key: 230ef4f71d53cccce8442ab9e3de9958957c3cd210050b33848a026403cd2d3d
+      expiration: 86400000 
+      refresh-token:
+        expiration: 604800000 # 7 days
