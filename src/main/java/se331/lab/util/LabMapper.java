@@ -11,7 +11,7 @@ import se331.lab.DTO.EventNoParticipantDTO;
 import se331.lab.DTO.EventOrganizerDTO;
 import se331.lab.DTO.OrganizerDTO;
 import se331.lab.DTO.ParticipantDTO;
-import se331.lab.DTO.ParticipantEventDTO;
+import se331.lab.DTO.ParticipantWithEventDTO;
 import se331.lab.entity.Event;
 import se331.lab.entity.Organizer;
 import se331.lab.entity.Participant;
@@ -38,7 +38,7 @@ public interface LabMapper {
 
     List<EventNoParticipantDTO> getEventNoParticipantDTO(List<Event> event);
 
-    ParticipantEventDTO getParticipantWithEventDTO(Participant participant);
+    ParticipantWithEventDTO getParticipantWithEventDTO(Participant participant);
 
-    List<ParticipantEventDTO> getParticipantWithEventDTO(List<Participant> participant);
+    List<ParticipantWithEventDTO> getParticipantWithEventDTO(List<Participant> participant);
 }

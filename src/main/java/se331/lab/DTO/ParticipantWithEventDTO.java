@@ -6,13 +6,12 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import se331.lab.DTO.EventNoParticipantDTO;
 
 @Data
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class ParticipantEventDTO {
+public class ParticipantWithEventDTO {
     Long id;
     String name;
     String telNo;
