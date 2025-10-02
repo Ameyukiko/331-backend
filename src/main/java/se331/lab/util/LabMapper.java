@@ -9,6 +9,7 @@ import org.mapstruct.factory.Mappers;
 import se331.lab.DTO.EventDTO;
 import se331.lab.DTO.EventNoParticipantDTO;
 import se331.lab.DTO.EventOrganizerDTO;
+import se331.lab.DTO.OrganizerAuthDTO;
 import se331.lab.DTO.OrganizerDTO;
 import se331.lab.DTO.ParticipantDTO;
 import se331.lab.DTO.ParticipantWithEventDTO;
@@ -41,4 +42,7 @@ public interface LabMapper {
     ParticipantWithEventDTO getParticipantWithEventDTO(Participant participant);
 
     List<ParticipantWithEventDTO> getParticipantWithEventDTO(List<Participant> participant);
+
+    @Mapping(target = "roles", source = "user.roles")
+    OrganizerAuthDTO getOrganizerAuthDTO(Organizer organizer);
 }
