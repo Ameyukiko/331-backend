@@ -42,6 +42,7 @@ public class SecurityConfiguration {
                 .authorizeHttpRequests((authorize) -> {
                     authorize.requestMatchers("/api/v1/auth/**").permitAll()
                             .requestMatchers(HttpMethod.GET, "/events").permitAll()
+                            .requestMatchers(HttpMethod.GET, "/participants").permitAll()
                             .requestMatchers(HttpMethod.GET, "/organizers").permitAll()
                             .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll()
                             .anyRequest().authenticated();
@@ -66,7 +67,11 @@ public class SecurityConfiguration {
     @Bean
     public CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration config = new CorsConfiguration();
-        config.setAllowedOriginPatterns(List.of("http://localhost:5173", "http://13.212.6.216:8001"));
+        config.setAllowedOriginPatterns(List.of(
+                "http://localhost:*",
+                "http://127.0.0.1:*",
+                "http://13.212.6.216:8001"
+        ));
         config.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "OPTIONS"));
         config.setAllowedHeaders(List.of("*"));
         config.setExposedHeaders(List.of("x-total-count"));
